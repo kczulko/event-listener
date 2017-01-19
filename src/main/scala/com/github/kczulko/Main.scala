@@ -1,5 +1,7 @@
 package com.github.kczulko
 
+import java.util.Calendar
+
 import akka.actor.ActorSystem
 import spray.json._
 import spray.http.StatusCodes
@@ -9,7 +11,8 @@ object Main extends App with SimpleRoutingApp {
   implicit val actorSystem = ActorSystem()
 
   def printContent(content: String): Unit = {
-    println("============================")
+    val time = Calendar.getInstance().getTime
+    println("================= " + time + " =================")
     println(
       try {
         content.parseJson.prettyPrint
@@ -18,7 +21,7 @@ object Main extends App with SimpleRoutingApp {
           content
       }
     )
-    println("============================")
+    println("================= " + time + " =================")
   }
 
   startServer(interface = "localhost", port = 666) {

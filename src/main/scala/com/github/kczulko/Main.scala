@@ -7,6 +7,8 @@ import spray.json._
 import spray.http.StatusCodes
 import spray.routing.SimpleRoutingApp
 
+import scala.util.{Failure, Success, Try}
+
 object Main extends App with SimpleRoutingApp {
   implicit val actorSystem = ActorSystem()
 
@@ -14,11 +16,9 @@ object Main extends App with SimpleRoutingApp {
     val time = Calendar.getInstance().getTime
     println("================= " + time + " =================")
     println(
-      try {
-        content.parseJson.prettyPrint
-      } catch {
-        case _:Exception =>
-          content
+      Try(content.parseJson.prettyPrint) match {
+        case Success(s) => s
+        case Failure(_) => content
       }
     )
     println("================= " + time + " =================")

@@ -30,7 +30,7 @@ object Main extends App with SimpleRoutingApp {
         post {
           entity(as[String]) { content =>
             printContent(content)
-            complete(StatusCodes.OK)
+            complete(StatusCodes.NoContent)
           }
         }
       }
